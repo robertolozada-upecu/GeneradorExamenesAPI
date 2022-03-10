@@ -13,8 +13,11 @@ using System.Text;
 
 namespace GeneradorExamenes.API.Controllers
 {
+    /// <summary>
+    /// Controlador Swagger de Cuenta
+    /// </summary>
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     public class CuentaController : ControllerBase
     {
         private readonly SignInManager<Usuario> _signInManager;
@@ -41,7 +44,8 @@ namespace GeneradorExamenes.API.Controllers
                 UserName = registroUsuarioRequestDTO.Email,
                 Email = registroUsuarioRequestDTO.Email,
                 Nombre = registroUsuarioRequestDTO.Nombre,
-                Calificacion = registroUsuarioRequestDTO.Calificacion,
+                TotalExamenes = 0,
+                FechaCreacion = DateTime.Now,
                 EmailConfirmed = true
             };
 
@@ -93,7 +97,7 @@ namespace GeneradorExamenes.API.Controllers
                     {
                         Id = usuario.Id,
                         Nombre = usuario.Nombre,
-                        Calificacion = usuario.Calificacion,
+                        //TotalExamenes = usuario.TotalExamenes,
                     }
                 });
             }
@@ -132,7 +136,7 @@ namespace GeneradorExamenes.API.Controllers
                 new Claim(ClaimTypes.Name, usuario.Nombre),
                 new Claim(ClaimTypes.Email, usuario.Email),
                 new Claim("Id", usuario.Id),
-                new Claim("Calificacion", usuario.Calificacion.ToString())
+                new Claim("TotalExamenes", usuario.TotalExamenes.ToString())
             };
 
             var roles = await _userManager.GetRolesAsync(usuario);

@@ -5,6 +5,9 @@ using Negocio.Repositorio.IRepositorio;
 
 namespace Negocio.Repositorio
 {
+    /// <summary>
+    /// Métodos de la clase Usuario
+    /// </summary>
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private readonly AppDbContext _db;

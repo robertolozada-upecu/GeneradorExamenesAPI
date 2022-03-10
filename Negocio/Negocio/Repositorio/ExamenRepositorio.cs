@@ -1,16 +1,15 @@
 ﻿using AccesoData;
 using AccesoData.Contexto;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Modelos;
 using Negocio.Repositorio.IRepositorio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Negocio.Repositorio
 {
+    /// <summary>
+    /// Métodos de la clase Examen
+    /// </summary>
     public class ExamenRepositorio : IExamenRepositorio
     {
         private readonly AppDbContext _db;
@@ -22,23 +21,29 @@ namespace Negocio.Repositorio
             _mapper = mapper;
         }
 
-        public async Task<RegistroExamenDTO> RegistrarExamen(RegistroExamenDTO ExamenDTO)
+        public async Task<ExamenDTO> RegistrarExamen(ExamenDTO ExamenDTO)
         {
-            var Examen = _mapper.Map<RegistroExamen>(ExamenDTO);
+            var Examen = _mapper.Map<Examen>(ExamenDTO);
             var nuevoExamen = _db.RegistroExamen.Add(Examen);
             await _db.SaveChangesAsync();
-            return _mapper.Map<RegistroExamenDTO>(nuevoExamen.Entity);
+            return _mapper.Map<ExamenDTO>(nuevoExamen.Entity);
         }
 
-        public async Task<IEnumerable<RegistroExamenDTO>> VerRegistroExamen()
+        public async Task<ExamenDTO> VerExamenCompleto(int idExamen)
         {
-            return _mapper.Map<IEnumerable<RegistroExamenDTO>>(_db.RegistroExamen);
+            var exa = await _db.RegistroExamen.Where(e => e.ExamenId == idExamen).FirstOrDefaultAsync();
+            return _mapper.Map<ExamenDTO>(exa);
         }
 
-        public async Task<IEnumerable<RegistroExamenDTO>> VerRegistroExamen(string idUsuario)
+        public async Task<IEnumerable<ExamenDTO>> VerRegistroExamen()
+        {
+            return _mapper.Map<IEnumerable<ExamenDTO>>(_db.RegistroExamen);
+        }
+
+        public async Task<IEnumerable<ExamenDTO>> VerRegistroExamen(string idUsuario)
         {
             var listaExamenes = _db.RegistroExamen.Where(Examen => Examen.UserId == idUsuario);
-            return _mapper.Map<IEnumerable<RegistroExamenDTO>>(listaExamenes);
+            return _mapper.Map<IEnumerable<ExamenDTO>>(listaExamenes);
         }
     }
 }

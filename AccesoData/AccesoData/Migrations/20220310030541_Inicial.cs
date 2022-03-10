@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AccesoData.Migrations
 {
-    public partial class MigracionInicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,7 +30,8 @@ namespace AccesoData.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calificacion = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TotalExamenes = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    RolUsuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -50,6 +51,39 @@ namespace AccesoData.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegistroPregunta",
+                columns: table => new
+                {
+                    PreguntaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExamenId = table.Column<int>(type: "int", nullable: false),
+                    Enunciado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Feedback = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumeroOpcionesRespuesta = table.Column<int>(type: "int", nullable: false),
+                    FechaCreacionPregunta = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegistroPregunta", x => x.PreguntaId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegistroRespuesta",
+                columns: table => new
+                {
+                    RespuestaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PreguntaId = table.Column<int>(type: "int", nullable: false),
+                    OpcionRespuesta = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OpcionCorrecta = table.Column<bool>(type: "bit", nullable: false),
+                    FechaCreacionRespuesta = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegistroRespuesta", x => x.RespuestaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -162,16 +196,17 @@ namespace AccesoData.Migrations
                 name: "RegistroExamen",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ExamenId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NombreExamen = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NotaFinal = table.Column<int>(type: "int", nullable: false),
-                    FechaExamen = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalExamenes = table.Column<int>(type: "int", nullable: false),
+                    FechaCreacionExamen = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegistroExamen", x => x.Id);
+                    table.PrimaryKey("PK_RegistroExamen", x => x.ExamenId);
                     table.ForeignKey(
                         name: "FK_RegistroExamen_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -244,6 +279,12 @@ namespace AccesoData.Migrations
 
             migrationBuilder.DropTable(
                 name: "RegistroExamen");
+
+            migrationBuilder.DropTable(
+                name: "RegistroPregunta");
+
+            migrationBuilder.DropTable(
+                name: "RegistroRespuesta");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

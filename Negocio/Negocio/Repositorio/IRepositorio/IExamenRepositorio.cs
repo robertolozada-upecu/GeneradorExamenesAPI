@@ -2,10 +2,14 @@
 
 namespace Negocio.Repositorio.IRepositorio
 {
+    /// <summary>
+    /// Interfaz del Repositorio Examen
+    /// </summary>
     public interface IExamenRepositorio
     {
-        Task<RegistroExamenDTO> RegistrarExamen(RegistroExamenDTO ExamenDTO);
-        Task<IEnumerable<RegistroExamenDTO>> VerRegistroExamen();
-        Task<IEnumerable<RegistroExamenDTO>> VerRegistroExamen(string idUsuario);
+        Task<ExamenDTO> RegistrarExamen(ExamenDTO ExamenDTO);
+        Task<IEnumerable<ExamenDTO>> VerRegistroExamen();
+        Task<IEnumerable<ExamenDTO>> VerRegistroExamen(string idUsuario);
+        Task<ExamenDTO> VerExamenCompleto(int idExamen);
     }
 }

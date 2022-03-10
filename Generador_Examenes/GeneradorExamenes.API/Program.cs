@@ -82,6 +82,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //Repositorios
 builder.Services.AddScoped<IExamenRepositorio, ExamenRepositorio>();
+builder.Services.AddScoped<IPreguntaRepositorio, PreguntaRepositorio>();
+builder.Services.AddScoped<IRespuestaRepositorio, RespuestaRepositorio>();
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 
 builder.Services.AddScoped<IInicializadorDB, InicializadorDB>();

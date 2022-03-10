@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Modelos
+﻿namespace Modelos
 {
+    /// <summary>
+    /// DTO para la respuesta del registro de usuario
+    /// </summary>
     public class RegistroUsuarioResponseDTO
     {
         public bool RegistroSatisfactorio { get; set; }

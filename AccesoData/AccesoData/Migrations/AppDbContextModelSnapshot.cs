@@ -22,33 +22,92 @@ namespace AccesoData.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AccesoData.RegistroExamen", b =>
+            modelBuilder.Entity("AccesoData.Examen", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ExamenId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExamenId"), 1L, 1);
 
-                    b.Property<DateTime>("FechaExamen")
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaCreacionExamen")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NombreExamen")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NotaFinal")
+                    b.Property<int>("TotalExamenes")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ExamenId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("RegistroExamen");
+                });
+
+            modelBuilder.Entity("AccesoData.Pregunta", b =>
+                {
+                    b.Property<int>("PreguntaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PreguntaId"), 1L, 1);
+
+                    b.Property<string>("Enunciado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExamenId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaCreacionPregunta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Feedback")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumeroOpcionesRespuesta")
+                        .HasColumnType("int");
+
+                    b.HasKey("PreguntaId");
+
+                    b.ToTable("RegistroPregunta");
+                });
+
+            modelBuilder.Entity("AccesoData.Respuesta", b =>
+                {
+                    b.Property<int>("RespuestaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RespuestaId"), 1L, 1);
+
+                    b.Property<DateTime>("FechaCreacionRespuesta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("OpcionCorrecta")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OpcionRespuesta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PreguntaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RespuestaId");
+
+                    b.ToTable("RegistroRespuesta");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -259,9 +318,6 @@ namespace AccesoData.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<decimal>("Calificacion")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
@@ -269,10 +325,17 @@ namespace AccesoData.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RolUsuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalExamenes")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasDiscriminator().HasValue("Usuario");
                 });
 
-            modelBuilder.Entity("AccesoData.RegistroExamen", b =>
+            modelBuilder.Entity("AccesoData.Examen", b =>
                 {
                     b.HasOne("AccesoData.Usuario", "Usuario")
                         .WithMany()

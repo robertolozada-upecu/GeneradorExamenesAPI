@@ -12,7 +12,12 @@ namespace AccessoData.InicializarDB
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AppDbContext _db;
-
+        /// <summary>
+        /// Inicializa la Base de datos
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="roleManager"></param>
+        /// <param name="db"></param>
         public InicializadorDB(UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager, AppDbContext db)
         {
             _userManager = userManager;
@@ -20,6 +25,9 @@ namespace AccessoData.InicializarDB
             _db = db;
         }
 
+        /// <summary>
+        /// Fuerza la migración de la base de datos de existir algo pendiente y crea un rol de administrator si no existe
+        /// </summary>
         public void InicializarDB()
         {
             if (_db.Database.GetPendingMigrations().Count() > 0)
@@ -35,10 +43,11 @@ namespace AccessoData.InicializarDB
                 Nombre = "Admin",
                 UserName = "admin@example.com",
                 Email = "admin@example.com",
+                FechaCreacion = DateTime.Now,
                 EmailConfirmed = true
             };
 
-            _userManager.CreateAsync(usuario, "Admins1234*").GetAwaiter().GetResult();
+            _userManager.CreateAsync(usuario, "Admin1234*").GetAwaiter().GetResult();
 
             _userManager.AddToRoleAsync(usuario, Roles.Administrador).GetAwaiter().GetResult();
         }
