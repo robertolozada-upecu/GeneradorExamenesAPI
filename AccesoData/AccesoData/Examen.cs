@@ -16,7 +16,7 @@ namespace AccesoData
         public Usuario Usuario { get; set; }
         public string NombreExamen { get; set; }
         public string? Descripcion { get; set; }
-        public int TotalExamenes { get; set; }
+        public int TotalPreguntas { get; set; }
         public DateTime FechaCreacionExamen { get; set; }
     }
 }

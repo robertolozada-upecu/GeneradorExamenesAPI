@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccesoData.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220310030541_Inicial")]
+    [Migration("20220312172232_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,7 @@ namespace AccesoData.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalExamenes")
+                    b.Property<int>("TotalPreguntas")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")

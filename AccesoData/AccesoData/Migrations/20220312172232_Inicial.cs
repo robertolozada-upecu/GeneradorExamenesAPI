@@ -201,7 +201,7 @@ namespace AccesoData.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NombreExamen = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TotalExamenes = table.Column<int>(type: "int", nullable: false),
+                    TotalPreguntas = table.Column<int>(type: "int", nullable: false),
                     FechaCreacionExamen = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

@@ -40,7 +40,7 @@ namespace AccesoData.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalExamenes")
+                    b.Property<int>("TotalPreguntas")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
